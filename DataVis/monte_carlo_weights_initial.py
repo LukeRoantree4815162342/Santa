@@ -52,9 +52,5 @@ for present in presents_with_random_weights:
     new_hist = plt.figure(present)
     plt.hist(presents_with_random_weights[present], 300, label=str(present))
 
-#for i in presents_with_random_weights:
-#    plt.plot()
-#
-#    
-    
+
     
