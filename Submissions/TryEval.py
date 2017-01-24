@@ -3,7 +3,7 @@
 
 import numpy as np
 
-def genProbWt(present):
+def gen_prob_wt(present):
     #present should be one of "blocks", "gloves", "doll" etc.
     present = present.lower()
     if present == "horse":
@@ -28,88 +28,114 @@ def genProbWt(present):
         return 0.0 #this shouldn't happen - an unknown present
 #END: def genProbWt
 
-def TryEvalBag(bagLine):
-    bagResults = {}
-    bagResults["bagwt"] = 0
-    bagResults["valid"] = False #this will be set to True once we can confirm that the bag is not overfilled
+def try_eval_bag(bag_line):
+    bag_results = {}
+    bag_results["bagwt"] = 0
+    bag_results["valid"] = False #this will be set to True once we can confirm that the bag is not overfilled
 
-    presents = bagLine.split()
-    presentCountSoFar = 0
-    bagWtSoFar = 0.0
+    presents = bag_line.split()
+    present_count_so_far = 0
+    bag_wt_so_far = 0.0
     for present in presents:
         present = present.strip(" _0123456789") #we should be left with only "blocks", "gloves", "doll", etc.
         if len(present) == 0:
             continue
-        presentCountSoFar += 1
-        presentWt = genProbWt(present)
-        bagWtSoFar += presentWt
+        present_count_so_far += 1
+        present_wt = gen_prob_wt(present)
+        bag_wt_so_far += present_wt
 
-    if (presentCountSoFar < 3) or (bagWtSoFar > 50.0):
-        bagResults["bagwt"] = 0     #it doesn't matter what we set the bagwt to if the bag is not valid
-        bagResults["valid"] = False
+    if (present_count_so_far < 3) or (bag_wt_so_far > 50.0):
+        bag_results["bagwt"] = 0     #it doesn't matter what we set the bagwt to if the bag is not valid
+        bag_results["valid"] = False
     else:
-        bagResults["bagwt"] = bagWtSoFar     #it doesn't matter what we set the bagwt to if the bag is not valid
-        bagResults["valid"] = True
+        bag_results["bagwt"] = bag_wt_so_far     #it doesn't matter what we set the bagwt to if the bag is not valid
+        bag_results["valid"] = True
 
-    return bagLine
-#END: def TryEvalBag
+    return bag_results
+#END: def try_eval_bag
 
-def TryEval(submissionText):
-    submResults = {}
-    submResults["totwt"] = 0
-    submResults["numvalidbags"] = 0
-    submResults["numinvalidbags"] = 0
-    submResults["totwaste"] = 0.0
-    submResults["avgwaste"] = 0.0
+def try_eval(submission_text):
+    subm_results = {}
+    subm_results["totwt"] = 0
+    subm_results["numvalidbags"] = 0
+    subm_results["numinvalidbags"] = 0
+    subm_results["totwaste"] = 0.0
+    subm_results["avgwaste"] = 0.0
 
-    bagLines = submissionText.splitlines()
+    bagLines = submission_text.splitlines()
 
-    for bagLine in bagLines:
-        bagLine = bagLine.strip()
-        if (len(bagLine) == 0) or (bagLine == "Gifts"):
+    for bag_line in bagLines:
+        bag_line = bag_line.strip()
+        if (len(bag_line) == 0) or (bag_line == "Gifts"):
             continue  # skip empty lines and the first line
-        bagResults = {}
-        bagResults = TryEvalBag(bagLine)
-        if bagResults["valid"]:
-            submResults["totwt"] += bagResults["bagwt"]
-            submResults["numvalidbags"] += 1
-            submResults["totwaste"] += 50.0 - bagResults["bagwt"]
-        else
-            submResults["numinvalidbags"] += 1
+        bag_results = {}
+        bag_results = try_eval_bag(bag_line)
+        if bag_results["valid"]:
+            subm_results["totwt"] += bag_results["bagwt"]
+            subm_results["numvalidbags"] += 1
+            subm_results["totwaste"] += (50.0 - bag_results["bagwt"])
+        else:
+            subm_results["numinvalidbags"] += 1
 
-    if submResults["numvalidbags"] > 0:
-        submResults["avgwaste"] = 0.0
+    if subm_results["numvalidbags"] == 0:
+        subm_results["avgwaste"] = 0.0
     else:
-        submResults["avgwaste"] = float(submResults["totwaste"]) / float(submResults["numvalidbags"])
-    return submResults
-#END: def TryEval
+        subm_results["avgwaste"] = float(subm_results["totwaste"]) / float(subm_results["numvalidbags"])
+    return subm_results
+#END: def try_eval
 
-def TryEvalMultiple(submissionText, multiple):
-    submResults = TryEval(submissionText)
-    multipleResults = {}
-    multipleResults["multipletotwt"] = 0
-    multipleResults["multiplenumvalidbags"] = 0
-    multipleResults["multiplenuminvalidbags"] = 0
-    multipleResults["multipleavgwaste"] = 0.0
+def try_eval_multiple(submission_text, multiple):
+    multiple_results = {}
+    multiple_results["multipletotwt"] = 0
+    multiple_results["multiplenumvalidbags"] = 0
+    multiple_results["multiplenuminvalidbags"] = 0
+    multiple_results["multipleavgwaste"] = 0.0
     for submIndex in range(multiple):
-        submResults = TryEval(submissionText)
-        multipleResults["multipletotwt"] += submResults["totwt"]
-        multipleResults["multiplenumvalidbags"] += submResults["numvalidbags"]
-        multipleResults["multiplenuminvalidbags"] += submResults["numinvalidbags"]
-        multipleResults["multipleavgwaste"] += submResults["avgwaste"]
-    multipleResults["avgtotwt"] = float(multipleResults["multipletotwt"]) / float(multiple)
-    multipleResults["avgnumvalidbags"] = float(multipleResults["multiplenumvalidbags"]) / float(multiple)
-    multipleResults["avgnuminvalidbags"] = float(multipleResults["multiplenuminvalidbags"]) / float(multiple)
-    multipleResults["avgwaste"] = float(multipleResults["multipleavgwaste"]) / float(multiple)
+        subm_results = try_eval(submission_text)
+        multiple_results["multipletotwt"] += subm_results["totwt"]
+        multiple_results["multiplenumvalidbags"] += subm_results["numvalidbags"]
+        multiple_results["multiplenuminvalidbags"] += subm_results["numinvalidbags"]
+        multiple_results["multipleavgwaste"] += subm_results["avgwaste"]
+    multiple_results["avgtotwt"] = float(multiple_results["multipletotwt"]) / float(multiple)
+    multiple_results["avgnumvalidbags"] = float(multiple_results["multiplenumvalidbags"]) / float(multiple)
+    multiple_results["avgnuminvalidbags"] = float(multiple_results["multiplenuminvalidbags"]) / float(multiple)
+    multiple_results["avgwaste"] = float(multiple_results["multipleavgwaste"]) / float(multiple)
 
-    return multipleResults
-#END: def TryEvalMultiple
+    #we only need to keep the "avgXXX" properties of the multiple_results dictionary
+    del multiple_results["multipleavgwaste"]
+    del multiple_results["multiplenuminvalidbags"]
+    del multiple_results["multiplenumvalidbags"]
+    del multiple_results["multipletotwt"]
+
+    return multiple_results
+#END: def try_eval_multiple
 
 
 #TEST:
-print 55.66
-submfile = open("..\sample_submission.csv", "r")
-submissionText = submfile.read()
-multipleResults = TryEvalMultiple(submissionText, 1)
-for key in multipleResults:
-    print key, multipleResults[key]
+#Note: In the sample submission there are 716 bags
+#submfile = open("..\sample_submission.csv", "r")
+#submission_text = submfile.read()
+#multiple_results = try_eval_multiple(submission_text, 50)
+#for key in multiple_results:
+#    print key, multiple_results[key]
+
+'''
+Donal tested the above (test code commented out above) doing two
+"Runs" of 500 multiples each (to get reliable averages) using the
+sample submission file.
+
+Here are the results:
+using 500 runs:
+avgnumvalidbags 451.362
+avgwaste 29.0612712012
+avgnuminvalidbags 264.638
+avgtotwt 9453.42666807
+
+using 500 runs:
+avgnumvalidbags 451.044
+avgwaste 29.097409031
+avgnuminvalidbags 264.956
+avgtotwt 9430.60693972
+
+So, reasonably close agreement. Also notice how awful the sample submission is!
+'''
