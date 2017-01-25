@@ -15,7 +15,7 @@ gifts = open(gifts_csv_location, 'r')
 gifts = gifts.read()
 gifts = gifts.split('\n')
 
-submission_one_csv = open("giftsdata.csv", 'wt')
+submission_one_csv = open("giftsdata.csv", 'wb')
 np.random.shuffle(gifts)
 
 writer = csv.writer(submission_one_csv, quoting=csv.QUOTE_NONNUMERIC)
