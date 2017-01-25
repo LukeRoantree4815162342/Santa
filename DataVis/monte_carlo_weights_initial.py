@@ -52,6 +52,7 @@ for present in presents_with_random_weights:
     new_hist = plt.figure(present)
     plt.hist(presents_with_random_weights[present], 300, label=str(present))
     plt.xlabel('weight')
+    plt.title(present)
 
 
     
