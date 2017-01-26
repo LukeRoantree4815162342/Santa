@@ -22,14 +22,15 @@ writer = csv.writer(submission_one_csv, quoting=csv.QUOTE_NONNUMERIC)
 row1 = []
 row1.append('Gifts')
 writer.writerow(row1)
-for i in range(len(gifts)/7 -25):
+bagsize = 7
+for i in range(len(gifts)/bagsize -25): #25 is specific to bagsize of 7; makes it 25 over limit
     row = []
     row.append('')
     for j in range(0,9):
         if j<9:
-            row[0] = ''.join([row[0],gifts[i+j], ' '])
+            row[0] = ''.join([row[0],gifts[bagsize*i+j], ' '])
         else:
-            row[0] = ''.join([row[0],gifts[i+j]])
+            row[0] = ''.join([row[0],gifts[bagsize*i+j]])
     writer.writerow(row)
 submission_one_csv.close()
 
