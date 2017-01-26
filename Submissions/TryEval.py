@@ -25,7 +25,8 @@ def gen_prob_wt(present):
     elif present == "gloves":
         return 3.0 + np.random.rand(1)[0] if np.random.rand(1) < 0.3 else np.random.rand(1)[0]
     else:
-        return 0.0 #this shouldn't happen - an unknown present
+        return 'Error' #this shouldn't happen - an unknown present
+                       #updated by luke to return a string so it crashes rather than not showing a problem if one exists
 #END: def genProbWt
 
 def try_eval_bag(bag_line):
