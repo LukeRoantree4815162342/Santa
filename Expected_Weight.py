@@ -28,6 +28,7 @@ def get_weight_of_profile_once(profile):
         present_count_in_profile = profile.presents[present]
         for i in range(present_count_in_profile):
             running_total_score += TryEval.gen_prob_wt(present)
+    running_total_score = running_total_score if (running_total_score<50.0) else 0.0
     return running_total_score
     
 
@@ -37,5 +38,6 @@ def average_weight_over_x_simulations(x, profile):
         sim_score = get_weight_of_profile_once(profile)
         running_total_score+= sim_score['bagwt']
     return 1.0*running_total_score/(1.0*x)
+
 
 #print average_weight_over_x_simulations(100000, example_profile)
