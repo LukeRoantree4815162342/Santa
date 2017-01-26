@@ -38,4 +38,4 @@ def average_weight_over_x_simulations(x, profile):
         running_total_score+= sim_score['bagwt']
     return 1.0*running_total_score/(1.0*x)
 
-print average_weight_over_x_simulations(100000, example_profile)
+#print average_weight_over_x_simulations(100000, example_profile)
