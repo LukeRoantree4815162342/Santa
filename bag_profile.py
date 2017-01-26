@@ -10,6 +10,7 @@ Use the present variables in global_vars when adding to Profile objects
 
 import collections as cl
 import global_vars as gv
+import gift_ids as gi
 
 class Profile:
     def __init__(self):
@@ -32,9 +33,25 @@ class Profile:
         c[present] = count
         self.presents = self.presents + c
 
+    def line_for_csv(self, gift_id_generator):
+        line = ""
+        first_present = True
+        for present in gv.presents_in_alpha_order:
+            present_count_in_profile = self.presents[present]
+            for i in range(present_count_in_profile):
+                gift_id = gift_id_generator.get_present_id_and_incerment(present)
+                if not first_present:
+                    line += ", "
+                first_present = False
+                line += present + "_" + str(gift_id)
+        return line
+
+
 #test
 #p = Profile()
 #p.addPresentCount(gv.horse, 3)
 #p.addPresentCount(gv.book, 1)
 #print p.presents
 #print p.key()
+#g = gi.GiftIDs()
+#print p.line_for_csv(g)
