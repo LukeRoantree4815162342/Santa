@@ -2,27 +2,27 @@
 #any one type of present or that the number suffix of a present is not used twice.
 
 import numpy as np
-
+import global_vars as gv
 def gen_prob_wt(present):
     #present should be one of "blocks", "gloves", "doll" etc.
     present = present.lower()
-    if present == "horse":
+    if present == gv.horse:
         return max(0, np.random.normal(5, 2, 1)[0])
-    elif present == "ball":
+    elif present == gv.ball:
         return max(0, 1 + np.random.normal(1, 0.3, 1)[0])
-    elif present == "bike":
+    elif present == gv.bike:
         return max(0, np.random.normal(20, 10, 1)[0])
-    elif present == "train":
+    elif present == gv.train:
         return max(0, np.random.normal(10, 5, 1)[0])
-    elif present == "coal":
+    elif present == gv.coal:
         return 47 * np.random.beta(0.5, 0.5, 1)[0]
-    elif present == "book":
+    elif present == gv.book:
         return np.random.chisquare(2, 1)[0]
-    elif present == "doll":
+    elif present == gv.doll:
         return np.random.gamma(5, 1, 1)[0]
-    elif present == "block":
+    elif present == gv.block:
         return np.random.triangular(5, 10, 20, 1)[0]
-    elif present == "gloves":
+    elif present == gv.gloves:
         return 3.0 + np.random.rand(1)[0] if np.random.rand(1) < 0.3 else np.random.rand(1)[0]
     else:
         return 'Error' #this shouldn't happen - an unknown present
