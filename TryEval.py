@@ -54,6 +54,31 @@ def try_eval_bag(bag_line):
 
     return bag_results
 #END: def try_eval_bag
+    
+def try_eval_bag_array(bag_line):
+    bag_results = {}
+    bag_results["bagwt"] = 0
+    bag_results["valid"] = False #this will be set to True once we can confirm that the bag is not overfilled
+
+    presents = bag_line
+    present_count_so_far = 0
+    bag_wt_so_far = 0.0
+    for present in presents:
+        if len(present) == 0:
+            continue
+        present_count_so_far += 1
+        present_wt = gen_prob_wt(present)
+        bag_wt_so_far += present_wt
+
+    if (present_count_so_far < 3) or (bag_wt_so_far > 50.0):
+        bag_results["bagwt"] = 0     #it doesn't matter what we set the bagwt to if the bag is not valid
+        bag_results["valid"] = False
+    else:
+        bag_results["bagwt"] = bag_wt_so_far     #it doesn't matter what we set the bagwt to if the bag is not valid
+        bag_results["valid"] = True
+
+    return bag_results
+
 
 def try_eval(submission_text):
     subm_results = {}
@@ -114,14 +139,14 @@ def try_eval_multiple(submission_text, multiple):
 
 #TEST:
 #Note: In the sample submission there are 716 bags
-    
+'''   
 submfile = open("possible_submission_bagsof7.csv", "r")
 submission_text = submfile.read()
 multiple_results = try_eval_multiple(submission_text, 50)
 print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
 for key in multiple_results:
     print key, multiple_results[key]
-
+'''
 '''
 Donal tested the above (test code commented out above) doing two
 "Runs" of 500 multiples each (to get reliable averages) using the
