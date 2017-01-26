@@ -15,15 +15,21 @@ gifts = open(gifts_csv_location, 'r')
 gifts = gifts.read()
 gifts = gifts.split('\n')
 
-submission_one_csv = open("giftsdata.csv", 'wb')
+submission_one_csv = open("possible_submission_bagsof7.csv", 'wb')
 np.random.shuffle(gifts)
 
 writer = csv.writer(submission_one_csv, quoting=csv.QUOTE_NONNUMERIC)
-for i in range(len(gifts)/10):
+row1 = []
+row1.append('Gifts')
+writer.writerow(row1)
+for i in range(len(gifts)/7 -25):
     row = []
     row.append('')
     for j in range(0,9):
-        row[0] = ''.join([row[0],gifts[i+j], ' '])
+        if j<9:
+            row[0] = ''.join([row[0],gifts[i+j], ' '])
+        else:
+            row[0] = ''.join([row[0],gifts[i+j]])
     writer.writerow(row)
 submission_one_csv.close()
 

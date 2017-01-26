@@ -105,7 +105,7 @@ def try_eval_multiple(submission_text, multiple):
     del multiple_results["multipleavgwaste"]
     del multiple_results["multiplenuminvalidbags"]
     del multiple_results["multiplenumvalidbags"]
-    del multiple_results["multipletotwt"]
+    del multiple_results["multipletotwt"] 
 
     return multiple_results
 #END: def try_eval_multiple
@@ -113,11 +113,12 @@ def try_eval_multiple(submission_text, multiple):
 
 #TEST:
 #Note: In the sample submission there are 716 bags
-#submfile = open("..\sample_submission.csv", "r")
-#submission_text = submfile.read()
-#multiple_results = try_eval_multiple(submission_text, 50)
-#for key in multiple_results:
-#    print key, multiple_results[key]
+submfile = open("possible_submission_bagsof7.csv", "r")
+submission_text = submfile.read()
+multiple_results = try_eval_multiple(submission_text, 50)
+print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
+for key in multiple_results:
+    print key, multiple_results[key]
 
 '''
 Donal tested the above (test code commented out above) doing two
@@ -139,3 +140,4 @@ avgtotwt 9430.60693972
 
 So, reasonably close agreement. Also notice how awful the sample submission is!
 '''
+
