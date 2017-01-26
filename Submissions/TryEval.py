@@ -114,6 +114,7 @@ def try_eval_multiple(submission_text, multiple):
 
 #TEST:
 #Note: In the sample submission there are 716 bags
+    
 submfile = open("possible_submission_bagsof7.csv", "r")
 submission_text = submfile.read()
 multiple_results = try_eval_multiple(submission_text, 50)

@@ -6,7 +6,7 @@ Created on Mon Jan 23 23:25:19 2017
 """
 
 import numpy as np
-import pandas as pd
+#import pandas as pd
 import matplotlib.pyplot as plt
 #import seaborn as sb
 import os
