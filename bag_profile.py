@@ -62,11 +62,22 @@ class Profile:
             self.subtractPresentCount(present, 1)
             return False
 
+#test Try improving a profile with coal and book by adding gloves:
+#p = Profile()
+#ew_cache = pew.ProfileExpectedWeights()
+#p.addPresentCount(gv.book, 1)
+#p.addPresentCount(gv.coal, 1)
+#print p.presents
+#added_ok = p.try_improve_by_adding_present(gv.gloves, ew_cache)
+#print "added gloves? " + str(added_ok)
+#print p.presents
+
 #test
 #p = Profile()
 #ew_cache = pew.ProfileExpectedWeights()
 #p.addPresentCount(gv.horse, 3)
 #p.addPresentCount(gv.book, 1)
+#p.addPresentCount(gv.coal, 1)
 #print p.presents
 #print p.key()
 #g = gi.GiftIDs()
@@ -74,7 +85,7 @@ class Profile:
 #print "Trying to add coal..."
 #added_ok = p.try_improve_by_adding_present(gv.coal, ew_cache)
 #print added_ok
-#print p.presents
+# print p.presents
 #print "Trying to add coal again..."
 #added_ok = p.try_improve_by_adding_present(gv.coal, ew_cache)
 #print added_ok
