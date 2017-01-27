@@ -140,12 +140,12 @@ def try_eval_multiple(submission_text, multiple):
 #TEST:
 #Note: In the sample submission there are 716 bags
 
-submfile = open("dadtest.csv", "r")
-submission_text = submfile.read()
-multiple_results = try_eval_multiple(submission_text, 500)
-print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
-for key in multiple_results:
-    print key, multiple_results[key]
+#submfile = open("dadtest.csv", "r")
+#submission_text = submfile.read()
+#multiple_results = try_eval_multiple(submission_text, 500)
+#print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
+#for key in multiple_results:
+#    print key, multiple_results[key]
 
 '''
 Donal tested the above (test code commented out above) doing two
