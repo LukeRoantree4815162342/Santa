@@ -32,9 +32,10 @@ def gen_prob_wt(present):
 def try_eval_bag(bag_line):
     bag_results = {}
     bag_results["bagwt"] = 0
+    bag_results["numtooheavy"] = 0
     bag_results["valid"] = False #this will be set to True once we can confirm that the bag is not overfilled
-
-    presents = bag_line.split()
+    bag_line = bag_line.strip(' ')
+    presents = bag_line.split(',')
     present_count_so_far = 0
     bag_wt_so_far = 0.0
     for present in presents:
@@ -45,6 +46,8 @@ def try_eval_bag(bag_line):
         present_wt = gen_prob_wt(present)
         bag_wt_so_far += present_wt
 
+    if (bag_wt_so_far > 50.0):
+        bag_results["numtooheavy"]+=1
     if (present_count_so_far < 3) or (bag_wt_so_far > 50.0):
         bag_results["bagwt"] = 0     #it doesn't matter what we set the bagwt to if the bag is not valid
         bag_results["valid"] = False
@@ -85,8 +88,10 @@ def try_eval(submission_text):
     subm_results["totwt"] = 0
     subm_results["numvalidbags"] = 0
     subm_results["numinvalidbags"] = 0
+    subm_results["numtooheavy"] = 0
     subm_results["totwaste"] = 0.0
     subm_results["avgwaste"] = 0.0
+    subm_results["avgnumtooheavy"] = 0.0
 
     bagLines = submission_text.splitlines()
 
@@ -102,11 +107,13 @@ def try_eval(submission_text):
             subm_results["totwaste"] += (50.0 - bag_results["bagwt"])
         else:
             subm_results["numinvalidbags"] += 1
+            subm_results["numtooheavy"] += 1
 
     if subm_results["numvalidbags"] == 0:
-        subm_results["avgwaste"] = 0.0
+        subm_results["avgwaste"] = 0.0  # Should this not be 50.0? -Luke
     else:
         subm_results["avgwaste"] = float(subm_results["totwaste"]) / float(subm_results["numvalidbags"])
+        subm_results["avgnumtooheavy"] = float(subm_results["numtooheavy"]) / float(len(bagLines))
     return subm_results
 #END: def try_eval
 
@@ -116,22 +123,28 @@ def try_eval_multiple(submission_text, multiple):
     multiple_results["multiplenumvalidbags"] = 0
     multiple_results["multiplenuminvalidbags"] = 0
     multiple_results["multipleavgwaste"] = 0.0
+    multiple_results["multipleavgnumtooheavy"] = 0.0
     for submIndex in range(multiple):
         subm_results = try_eval(submission_text)
         multiple_results["multipletotwt"] += subm_results["totwt"]
         multiple_results["multiplenumvalidbags"] += subm_results["numvalidbags"]
         multiple_results["multiplenuminvalidbags"] += subm_results["numinvalidbags"]
         multiple_results["multipleavgwaste"] += subm_results["avgwaste"]
+        multiple_results["multipleavgnumtooheavy"] += subm_results["avgnumtooheavy"]
     multiple_results["avgtotwt"] = float(multiple_results["multipletotwt"]) / float(multiple)
     multiple_results["avgnumvalidbags"] = float(multiple_results["multiplenumvalidbags"]) / float(multiple)
     multiple_results["avgnuminvalidbags"] = float(multiple_results["multiplenuminvalidbags"]) / float(multiple)
     multiple_results["avgwaste"] = float(multiple_results["multipleavgwaste"]) / float(multiple)
+    multiple_results["avgnumtooheavy"] = float(multiple_results["multipleavgnumtooheavy"]) / float(multiple)
+    multiple_results["avgnumlessthan3gifts"] = multiple_results["avgnuminvalidbags"] - multiple_results["avgnumtooheavy"]
+
 
     #we only need to keep the "avgXXX" properties of the multiple_results dictionary
     del multiple_results["multipleavgwaste"]
     del multiple_results["multiplenuminvalidbags"]
     del multiple_results["multiplenumvalidbags"]
     del multiple_results["multipletotwt"] 
+    del multiple_results["multipleavgnumtooheavy"] 
 
     return multiple_results
 #END: def try_eval_multiple
@@ -140,12 +153,12 @@ def try_eval_multiple(submission_text, multiple):
 #TEST:
 #Note: In the sample submission there are 716 bags
 
-#submfile = open("dadtest.csv", "r")
-#submission_text = submfile.read()
-#multiple_results = try_eval_multiple(submission_text, 500)
-#print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
-#for key in multiple_results:
-#    print key, multiple_results[key]
+submfile = open("dadtest.csv", "r")
+submission_text = submfile.read()
+multiple_results = try_eval_multiple(submission_text, 500)
+print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
+for key in multiple_results:
+    print key, multiple_results[key]
 
 '''
 Donal tested the above (test code commented out above) doing two
