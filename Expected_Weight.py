@@ -8,6 +8,7 @@ Created on Thu Jan 26 21:56:08 2017
 import TryEval
 import numpy as np
 import global_vars as gv
+import bag_profile as bp
 
 
 #
@@ -35,9 +36,18 @@ def get_weight_of_profile_once(profile):
 def average_weight_over_x_simulations(x, profile):
     running_total_score = 0
     for i in range(x):
-        sim_score = get_weight_of_profile_once(profile)
-        running_total_score+= sim_score['bagwt']
+        running_total_score += get_weight_of_profile_once(profile)
     return 1.0*running_total_score/(1.0*x)
 
 
 #print average_weight_over_x_simulations(100000, example_profile)
+
+#p = bp.Profile()
+#p.addPresentCount(gv.horse, 2)
+#print p.presents
+#print average_weight_over_x_simulations(1000, p)
+#for i in range(15):
+#    p.addPresentCount(gv.horse, 1)
+#    print p.presents
+#    print average_weight_over_x_simulations(100, p)
+
