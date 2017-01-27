@@ -15,4 +15,4 @@ presents_in_alpha_order = [ball, bike, blocks, book, coal, doll, gloves, horse, 
 presents_in_size_order = [coal, bike, blocks, train, horse, doll, book, ball, gloves]
 #Thanks Christopher for that handy_numbers file - that's where I got the size order
 
-default_simulations = 5000
+default_simulations = 100

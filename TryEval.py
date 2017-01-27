@@ -20,12 +20,12 @@ def gen_prob_wt(present):
         return np.random.chisquare(2, 1)[0]
     elif present == gv.doll:
         return np.random.gamma(5, 1, 1)[0]
-    elif present == gv.block:
+    elif present == gv.blocks:
         return np.random.triangular(5, 10, 20, 1)[0]
     elif present == gv.gloves:
         return 3.0 + np.random.rand(1)[0] if np.random.rand(1) < 0.3 else np.random.rand(1)[0]
     else:
-        return 'Error' #this shouldn't happen - an unknown present
+        return 'error' #this shouldn't happen - an unknown present
                        #updated by luke to return a string so it crashes rather than not showing a problem if one exists
 #END: def genProbWt
 
@@ -139,14 +139,14 @@ def try_eval_multiple(submission_text, multiple):
 
 #TEST:
 #Note: In the sample submission there are 716 bags
-'''   
-submfile = open("possible_submission_bagsof7.csv", "r")
+
+submfile = open("dadtest.csv", "r")
 submission_text = submfile.read()
-multiple_results = try_eval_multiple(submission_text, 50)
+multiple_results = try_eval_multiple(submission_text, 500)
 print multiple_results["avgnumvalidbags"]+multiple_results["avgnuminvalidbags"]
 for key in multiple_results:
     print key, multiple_results[key]
-'''
+
 '''
 Donal tested the above (test code commented out above) doing two
 "Runs" of 500 multiples each (to get reliable averages) using the

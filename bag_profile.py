@@ -10,7 +10,8 @@ Use the present variables in global_vars when adding to Profile objects
 
 import collections as cl
 import global_vars as gv
-import gift_ids as gi
+#import gift_ids as gi
+#import profile_expected_weights as pew
 
 class Profile:
     def __init__(self):
@@ -33,6 +34,11 @@ class Profile:
         c[present] = count
         self.presents = self.presents + c
 
+    def subtractPresentCount(self, present, count):
+        c = cl.Counter()
+        c[present] = count
+        self.presents.subtract(c)
+
     def line_for_csv(self, gift_id_generator):
         line = ""
         first_present = True
@@ -46,12 +52,30 @@ class Profile:
                 line += present + "_" + str(gift_id)
         return line
 
+    def try_improve_by_adding_present(self, present, ew_cache):
+        curr_weight = ew_cache.get_profile_weight(self)
+        self.addPresentCount(present, 1)
+        new_weight = ew_cache.get_profile_weight(self)
+        if new_weight > curr_weight:
+            return True
+        else:
+            self.subtractPresentCount(present, 1)
+            return False
 
 #test
 #p = Profile()
+#ew_cache = pew.ProfileExpectedWeights()
 #p.addPresentCount(gv.horse, 3)
 #p.addPresentCount(gv.book, 1)
 #print p.presents
 #print p.key()
 #g = gi.GiftIDs()
 #print p.line_for_csv(g)
+#print "Trying to add coal..."
+#added_ok = p.try_improve_by_adding_present(gv.coal, ew_cache)
+#print added_ok
+#print p.presents
+#print "Trying to add coal again..."
+#added_ok = p.try_improve_by_adding_present(gv.coal, ew_cache)
+#print added_ok
+#print p.presents

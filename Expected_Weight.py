@@ -8,7 +8,7 @@ Created on Thu Jan 26 21:56:08 2017
 import TryEval
 import numpy as np
 import global_vars as gv
-import bag_profile as bp
+#import bag_profile as bp
 
 
 #

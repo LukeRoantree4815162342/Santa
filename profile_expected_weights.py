@@ -1,4 +1,4 @@
-import bag_profile as bp
+#import bag_profile as bp
 import Expected_Weight as ew
 import global_vars as gv
 
