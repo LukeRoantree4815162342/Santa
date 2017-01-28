@@ -15,16 +15,29 @@ presents_in_alpha_order = [ball, bike, blocks, book, coal, doll, gloves, horse, 
 presents_in_size_order = [coal, bike, blocks, train, horse, doll, book, ball, gloves]
 #Thanks Christopher for that handy_numbers file - that's where I got the size order
 
-average_weights = {}
-average_weights[ball] = 20.072
-average_weights[bike] = 5.0029
-average_weights[blocks] = 2.0003
-average_weights[book] = 11.668
-average_weights[coal] = 23.472
-average_weights[doll] = 1.4022
-average_weights[gloves] = 10.033
-average_weights[horse] = 4.9998
-average_weights[train] = 2.0015
+average_weights = {
+	"bike":		20.072,
+	"horse":	5.0029,
+	"ball":		2.0003,
+	"blocks":	11.668,
+	"coal":		23.472,
+	"gloves":	1.4022,
+	"train":	10.033,
+	"doll":		4.9998,
+	"book":		2.0015
+}
+average_mass = average_weights
 
-
+present_count = { 
+	"horse":	1000,
+	"ball":		1100,
+	"bike":		500,
+	"train":	1000,
+	"coal":		166,
+	"book":		1200,
+	"doll":		1000,
+	"blocks":	1000,
+	"gloves":	200	
+}
+total_presents = 7166
 default_simulations = 1000
