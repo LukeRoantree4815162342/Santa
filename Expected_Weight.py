@@ -8,7 +8,7 @@ Created on Thu Jan 26 21:56:08 2017
 import TryEval
 import numpy as np
 import global_vars as gv
-#import bag_profile as bp
+import bag_profile as bp
 
 
 #
@@ -30,6 +30,7 @@ def get_weight_of_profile_once(profile):
         for i in range(present_count_in_profile):
             running_total_score += TryEval.gen_prob_wt(present)
     running_total_score = running_total_score if (running_total_score<50.0) else 0.0
+    #print running_total_score
     return running_total_score
     
 
@@ -51,3 +52,23 @@ def average_weight_over_x_simulations(x, profile):
 #    print p.presents
 #    print average_weight_over_x_simulations(100, p)
 
+#chrissy line: doll_13 doll_14 ball_23 doll_15 horse_19 train_12 ball_24 book_23 gloves_21 ball_25
+#p = bp.Profile()
+#p.addPresentCount(gv.doll, 3)
+#p.addPresentCount(gv.ball, 2)
+#p.addPresentCount(gv.horse, 1)
+#p.addPresentCount(gv.train, 1)
+#p.addPresentCount(gv.book, 1)
+#p.addPresentCount(gv.gloves, 1)
+#print p.presents
+#print average_weight_over_x_simulations(1000, p)
+
+#p = bp.Profile()
+#p.addPresentCount(gv.bike, 1)
+#p.addPresentCount(gv.blocks, 1)
+#p.addPresentCount(gv.horse, 2)
+#print p.presents
+#print "weight: " + str(average_weight_over_x_simulations(100, p))
+#p.addPresentCount(gv.gloves, 1)
+#print p.presents
+#print "weight: " + str(average_weight_over_x_simulations(100, p))

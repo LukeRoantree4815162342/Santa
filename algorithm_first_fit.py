@@ -15,10 +15,10 @@ for present in gv.presents_in_size_order:
 
     print "*********** starting present: " + present
 
-    stop_now = False
+    stop_now = presents_left.count_left(present) <= 0
 
     while not stop_now:
-        presents_left.take_present(present) #remove a present from the presents_left list and try to add it to a bag/profile
+        presents_left.try_take_present(present) #remove a present from the presents_left list and try to add it to a bag/profile
         added_ok = False
         for profile in bag_profiles:
             added_ok = profile.try_improve_by_adding_present(present, ew_cache)

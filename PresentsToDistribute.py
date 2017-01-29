@@ -13,12 +13,31 @@ class PresentsToDistribute:
         self.remaining_dict[gv.horse] = 1100
         self.remaining_dict[gv.train] = 1000
 
-    def take_present(self, present):
-        self.remaining_dict[present] -= 1
+#    def take_present(self, present):
+#        self.remaining_dict[present] -= 1
+
+    def try_take_present(self, present):
+        if(self.count_left > 0):
+            self.remaining_dict[present] -= 1
+            return True
+        else:
+            return False
 
     def count_left(self, present):
         return  self.remaining_dict[present]
 
+    def can_profile_be_taken(self, prof):
+        prof_presents = prof.presents
+        profile_can_be_filled_so_far = True
+        for present, count in prof.presents.iteritems():
+            if self.remaining_dict[present] < count:
+                profile_can_be_filled_so_far = False
+                break
+        return profile_can_be_filled_so_far
+
+    def take_profile(self, prof):
+        for present, count in prof.presents.iteritems():
+            self.remaining_dict[present] -= count
 
 #test
 #ptd = PresentsToDistribute()

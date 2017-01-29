@@ -42,14 +42,14 @@ class StartingBags:
             #determine if we should add present_to_try_to_add to a bag which already has the presents in presents_in_order
             presents_in_order_profile = self.presents_list_to_profile(presents_in_order)
             extended_profile = presents_in_order_profile.addPresentCount(present_try_add, 1)
-            #simply check if the expected weight (not setting to zero if under 3 resents or over 50 weight) is <= 50 ####################################################
+            #simply check if the expected weight (not setting to zero if under 3 presents or over 50 weight) is <= 50 ####################################################
             if presents_in_order_profile.try_improve_by_adding_present(present_try_add, self.pew_cache): #THIS IS WHERE IT CHECKS IF present_try_add COULD BE ADDED
                 extended_presents_in_order = presents_in_order + [present_try_add]
                 self.add_bags_starting_with(sbags_so_far, extended_presents_in_order)
 
     def presents_not_bigger(self, present):
         present_index = gv.presents_in_size_order.index(present)
-        presents_in_size_order_last_index = len(gv.presents_in_size_order) - 1
+        presents_in_size_order_last_index = len(gv.presents_in_size_order)
         return gv.presents_in_size_order[present_index:presents_in_size_order_last_index]
 
     def presents_list_to_profile(self, presents_list):
@@ -59,11 +59,13 @@ class StartingBags:
         return prof
 
 #Note on usage:
-sbags = StartingBags()
-sbags.setup()
-for keypresent in sbags.sbags_dict:
-    print "bags starting with: " + keypresent
-    baglist = sbags.sbags_dict[keypresent]
-    for bag in baglist:
-        print bag.presents
-        print "    [expected weight: " + str(ew.average_weight_over_x_simulations(gv.default_simulations, bag)) + "]"
+#sbags = StartingBags()
+#sbags.setup()
+#for keypresent in sbags.sbags_dict:
+#    print "bags starting with: " + keypresent
+#    baglist = sbags.sbags_dict[keypresent]
+#    for bag in baglist:
+#        print bag.presents
+#        print "    [expected weight: " + str(ew.average_weight_over_x_simulations(gv.default_simulations, bag)) + "]"
+
+

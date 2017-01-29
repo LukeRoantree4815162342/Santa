@@ -12,6 +12,7 @@ import collections as cl
 import global_vars as gv
 #import gift_ids as gi
 #import profile_expected_weights as pew
+import copy
 
 class Profile:
     def __init__(self):
@@ -47,7 +48,7 @@ class Profile:
             for i in range(present_count_in_profile):
                 gift_id = gift_id_generator.get_present_id_and_incerment(present)
                 if not first_present:
-                    line += ", "
+                    line += " "
                 first_present = False
                 line += present + "_" + str(gift_id)
         return line
@@ -62,6 +63,9 @@ class Profile:
             self.subtractPresentCount(present, 1)
             return False
 
+    def clone(self):
+        return copy.deepcopy(self)
+
 #test Try improving a profile with coal and book by adding gloves:
 #p = Profile()
 #ew_cache = pew.ProfileExpectedWeights()
@@ -71,6 +75,8 @@ class Profile:
 #added_ok = p.try_improve_by_adding_present(gv.gloves, ew_cache)
 #print "added gloves? " + str(added_ok)
 #print p.presents
+#for key, value in p.presents.iteritems():
+#    print "key=" + key + ", value=" + str(value)
 
 #test
 #p = Profile()
@@ -89,4 +95,16 @@ class Profile:
 #print "Trying to add coal again..."
 #added_ok = p.try_improve_by_adding_present(gv.coal, ew_cache)
 #print added_ok
+#print p.presents
+
+#test
+#p = Profile()
+#p.addPresentCount(gv.horse, 3)
+#p.addPresentCount(gv.book, 1)
+#print p.presents
+#p.addPresentCount(gv.coal, 1)
+#print p.presents
+#p2 = p.clone()
+#p2.addPresentCount(gv.train, 1)
+#print p2.presents
 #print p.presents
